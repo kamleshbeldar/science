@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Science Simulation Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="loader" class="loader-overlay">
+      <div class="loader-core"></div>
+      <p>Loading Science Simulation Hub...</p>
+    </div>
+
+    <canvas id="particles-canvas"></canvas>
+
+    <header class="navbar glass">
+      <div class="logo">Science Simulation Hub</div>
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#physics">Physics</a>
+        <a href="#chemistry">Chemistry</a>
+        <a href="#biology">Biology</a>
+        <a href="#assistant">AI Assistant</a>
+      </nav>
+      <div class="nav-controls">
+        <button id="soundToggle" class="icon-btn" aria-label="Toggle sound">🔊</button>
+        <button id="themeToggle" class="icon-btn" aria-label="Toggle theme">🌙</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="home" class="hero section reveal">
+        <div class="hero-content glass">
+          <h1>Learn Science Visually</h1>
+          <p>Interactive simulations that make concepts easy</p>
+          <a href="#physics" class="cta-btn">Start Exploring</a>
+        </div>
+      </section>
+
+      <section id="physics" class="section reveal">
+        <h2>Physics Lab</h2>
+        <div class="sim-grid">
+          <article class="sim-card glass">
+            <h3>Projectile Motion Simulator</h3>
+            <canvas id="projectileCanvas" width="340" height="180"></canvas>
+            <div class="controls">
+              <label>Angle <input id="angle" type="range" min="10" max="80" value="45" /></label>
+              <label>Velocity <input id="velocity" type="range" min="10" max="60" value="30" /></label>
+            </div>
+            <div class="sim-buttons">
+              <button data-run="projectile">Run</button>
+              <button data-reset="projectile">Reset</button>
+            </div>
+            <div class="predict-wrap">
+              <label>Predict max range (m): <input id="projectilePrediction" type="number" min="1" /></label>
+            </div>
+            <p class="explain">Why this happens: Higher velocity and ideal angle (~45°) maximize horizontal range under gravity.</p>
+            <div class="quiz" data-quiz="projectile">
+              <p>Quiz: Which angle gives the best range (ignoring air resistance)?</p>
+              <button data-answer="30">30°</button><button data-answer="45">45°</button><button data-answer="70">70°</button>
+              <span class="quiz-result"></span>
+            </div>
+          </article>
+
+          <article class="sim-card glass">
+            <h3>Gravity Orbit Simulation</h3>
+            <canvas id="gravityCanvas" width="340" height="180"></canvas>
+            <div class="controls">
+              <label>Planet Speed <input id="orbitSpeed" type="range" min="1" max="10" value="5" /></label>
+            </div>
+            <div class="sim-buttons">
+              <button data-run="gravity">Run</button>
+              <button data-reset="gravity">Reset</button>
+            </div>
+            <div class="predict-wrap">
+              <label>Predict orbit period (s): <input id="gravityPrediction" type="number" min="1" /></label>
+            </div>
+            <p class="explain">Why this happens: Gravitational attraction provides centripetal force that keeps planets in orbit.</p>
+            <div class="quiz" data-quiz="gravity">
+              <p>Quiz: If speed increases too much, the planet may...</p>
+              <button data-answer="fall">fall into sun</button><button data-answer="escape">escape orbit</button>
+              <span class="quiz-result"></span>
+            </div>
+          </article>
+
+          <article class="sim-card glass">
+            <h3>Pendulum Simulation</h3>
+            <canvas id="pendulumCanvas" width="340" height="180"></canvas>
+            <div class="controls">
+              <label>Length <input id="pendulumLength" type="range" min="60" max="130" value="95" /></label>
+            </div>
+            <div class="sim-buttons">
+              <button data-run="pendulum">Run</button>
+              <button data-reset="pendulum">Reset</button>
+            </div>
+            <div class="predict-wrap">
+              <label>Predict period (s): <input id="pendulumPrediction" type="number" min="0" step="0.1" /></label>
+            </div>
+            <p class="explain">Why this happens: Longer pendulums swing more slowly because period rises with square root of length.</p>
+            <div class="quiz" data-quiz="pendulum">
+              <p>Quiz: Increasing length makes the period...</p>
+              <button data-answer="increase">Increase</button><button data-answer="decrease">Decrease</button>
+              <span class="quiz-result"></span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="chemistry" class="section reveal">
+        <h2>Chemistry Lab</h2>
+        <div class="sim-grid">
+          <article class="sim-card glass">
+            <h3>Atom Structure</h3>
+            <canvas id="atomCanvas" width="340" height="180"></canvas>
+            <div class="sim-buttons">
+              <button data-run="atom">Run</button>
+              <button data-reset="atom">Reset</button>
+            </div>
+            <p class="explain">Why this happens: Electrons occupy energy levels around a dense nucleus.</p>
+            <div class="quiz" data-quiz="atom">
+              <p>Quiz: Electrons are found in...</p>
+              <button data-answer="orbitals">orbitals/energy levels</button><button data-answer="nucleus">the nucleus</button>
+              <span class="quiz-result"></span>
+            </div>
+          </article>
+
+          <article class="sim-card glass">
+            <h3>Interactive Periodic Table</h3>
+            <div id="periodicTable" class="periodic-grid"></div>
+            <div id="elementInfo" class="element-info">Click an element to learn more.</div>
+            <p class="explain">Why this happens: Element behavior follows periodic trends in valence electrons.</p>
+            <div class="quiz" data-quiz="periodic">
+              <p>Quiz: Which group contains noble gases?</p>
+              <button data-answer="18">Group 18</button><button data-answer="1">Group 1</button>
+              <span class="quiz-result"></span>
+            </div>
+          </article>
+
+          <article class="sim-card glass">
+            <h3>Chemical Reaction Simulator</h3>
+            <canvas id="reactionCanvas" width="340" height="180"></canvas>
+            <div class="controls">
+              <label>Temperature <input id="tempControl" type="range" min="1" max="10" value="5" /></label>
+            </div>
+            <div class="sim-buttons">
+              <button data-run="reaction">Run</button>
+              <button data-reset="reaction">Reset</button>
+            </div>
+            <p class="explain">Why this happens: Higher temperature boosts particle collisions, increasing reaction rate.</p>
+            <div class="quiz" data-quiz="reaction">
+              <p>Quiz: Raising temperature generally makes reactions...</p>
+              <button data-answer="faster">Faster</button><button data-answer="slower">Slower</button>
+              <span class="quiz-result"></span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="biology" class="section reveal">
+        <h2>Biology Lab</h2>
+        <div class="sim-grid">
+          <article class="sim-card glass">
+            <h3>Human Heart Animation</h3>
+            <canvas id="heartCanvas" width="340" height="180"></canvas>
+            <div class="controls">
+              <label>Heart Rate <input id="heartRate" type="range" min="50" max="140" value="80" /></label>
+            </div>
+            <div class="sim-buttons">
+              <button data-run="heart">Run</button>
+              <button data-reset="heart">Reset</button>
+            </div>
+            <p class="explain">Why this happens: Heart muscle contracts rhythmically to pump blood through the body.</p>
+            <div class="quiz" data-quiz="heart">
+              <p>Quiz: Which side pumps oxygenated blood to the body?</p>
+              <button data-answer="left">Left side</button><button data-answer="right">Right side</button>
+              <span class="quiz-result"></span>
+            </div>
+          </article>
+
+          <article class="sim-card glass">
+            <h3>Breathing Lungs Simulation</h3>
+            <canvas id="lungsCanvas" width="340" height="180"></canvas>
+            <div class="controls">
+              <label>Breathing Speed <input id="breathRate" type="range" min="1" max="10" value="4" /></label>
+            </div>
+            <div class="sim-buttons">
+              <button data-run="lungs">Run</button>
+              <button data-reset="lungs">Reset</button>
+            </div>
+            <p class="explain">Why this happens: The diaphragm changes chest cavity volume, causing lungs to inflate/deflate.</p>
+            <div class="quiz" data-quiz="lungs">
+              <p>Quiz: During inhalation, diaphragm moves...</p>
+              <button data-answer="down">Downward</button><button data-answer="up">Upward</button>
+              <span class="quiz-result"></span>
+            </div>
+          </article>
+
+          <article class="sim-card glass">
+            <h3>Cell Structure (Zoom)</h3>
+            <canvas id="cellCanvas" width="340" height="180"></canvas>
+            <div class="controls">
+              <label>Zoom <input id="cellZoom" type="range" min="1" max="6" value="2" /></label>
+            </div>
+            <div class="sim-buttons">
+              <button data-run="cell">Run</button>
+              <button data-reset="cell">Reset</button>
+            </div>
+            <p class="explain">Why this happens: Zoom reveals organelles like nucleus and mitochondria in greater detail.</p>
+            <div class="quiz" data-quiz="cell">
+              <p>Quiz: Which organelle is the “powerhouse” of cell?</p>
+              <button data-answer="mitochondria">Mitochondria</button><button data-answer="ribosome">Ribosome</button>
+              <span class="quiz-result"></span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="assistant" class="section reveal">
+        <h2>AI Concept Assistant (Demo UI)</h2>
+        <div class="assistant glass">
+          <div id="chatLog" class="chat-log">
+            <p><strong>AI:</strong> Hi! Ask me about any simulation concept.</p>
+          </div>
+          <div class="chat-input-row">
+            <input id="chatInput" type="text" placeholder="Why does projectile range peak near 45°?" />
+            <button id="sendChat">Send</button>
+          </div>
+        </div>
+
+        <div class="leaderboard glass">
+          <h3>Leaderboard (Demo)</h3>
+          <ol>
+            <li>Ava - 9/10</li>
+            <li>Noah - 8/10</li>
+            <li>Mia - 8/10</li>
+          </ol>
+          <p>Total Quiz Score: <span id="score">0</span></p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer glass">
+      <p>© 2026 Science Simulation Hub</p>
+      <div>
+        <a href="#">X</a>
+        <a href="#">GitHub</a>
+        <a href="#">YouTube</a>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
